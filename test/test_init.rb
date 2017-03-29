@@ -11,4 +11,5 @@ require 'account_component/controls'
 
 require 'pp'
 
+module AccountComponent; end
 include AccountComponent
