@@ -17,6 +17,8 @@ module AccountComponent
       category :account
 
       handle Deposit do |deposit|
+        account_id = deposit.account_id
+
         time = clock.iso8601
 
         deposited = Deposited.follow(deposit)
