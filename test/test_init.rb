@@ -7,8 +7,6 @@ require_relative '../init.rb'
 
 require 'test_bench'; TestBench.activate
 
-require 'account_component/controls'
-
 require 'pp'
 
 module AccountComponent; end
