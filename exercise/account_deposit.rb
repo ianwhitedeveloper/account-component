@@ -11,3 +11,9 @@ puts "Deposit $#{amount} to account #{account.id}"
 account.deposit(amount)
 
 puts "Account #{account.id} balance: $#{account.balance}"
+
+amount = 22
+puts "Deposit $#{amount} to account #{account.id}"
+account.deposit(amount)
+
+puts "Account #{account.id} balance: $#{account.balance}"
