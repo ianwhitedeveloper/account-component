@@ -17,7 +17,7 @@ context "Handle Commands" do
 
     writer = handler.write
 
-    deposited, * = writer.messages do |event|
+    deposited = writer.one_message do |event|
       event.instance_of? Messages::Events::Deposited
     end
 
