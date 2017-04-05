@@ -9,3 +9,7 @@ deposited.processed_time = Clock.iso8601
 stream_name = 'account-123'
 
 Messaging::Postgres::Write.(deposited, stream_name)
+
+EventSource::Postgres::Read.(stream_name) do |event|
+  pp event
+end
