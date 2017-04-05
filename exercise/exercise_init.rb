@@ -1,6 +1,6 @@
 ENV['CONSOLE_DEVICE'] ||= 'stdout'
 ENV['LOG_LEVEL'] ||= 'info'
-ENV['LOG_TAGS'] = '_untagged,message,write,read'
+ENV['LOG_TAGS'] = '_untagged,-data,write,read,handle'
 
 puts RUBY_DESCRIPTION
 
