@@ -17,16 +17,16 @@ context "Handle Commands" do
 
     writer = handler.write
 
-    test "Deposited Event is Written" do
-      written = writer.written? do |message|
-        message.instance_of? Messages::Events::Deposited
-      end
+    deposited, * = writer.messages do |event|
+      event.instance_of? Messages::Events::Deposited
+    end
 
-      assert(written)
+    test "Deposited Event is Written" do
+      refute(deposited.nil?)
     end
 
     test "Written to the account-123 stream" do
-      written_to_stream = writer.written? do |_, stream_name|
+      written_to_stream = writer.written?(deposited) do |stream_name|
         stream_name == 'account-123'
       end
 
@@ -35,35 +35,19 @@ context "Handle Commands" do
 
     context "Attributes" do
       test "account_id" do
-        written = writer.written? do |message|
-          message.account_id == '123'
-        end
-
-        assert(written)
+        assert(deposited.account_id == '123')
       end
 
       test "amount" do
-        written = writer.written? do |message|
-          message.amount == 11
-        end
-
-        assert(written)
+        assert(deposited.amount == 11)
       end
 
       test "time" do
-        written = writer.written? do |message|
-          message.time == '2000-01-01T11:11:11.00000Z'
-        end
-
-        assert(written)
+        assert(deposited.time == '2000-01-01T11:11:11.00000Z')
       end
 
       test "processed_time" do
-        written = writer.written? do |message|
-          message.processed_time == Clock::UTC.iso8601(processed_time)
-        end
-
-        assert(written)
+        assert(deposited.processed_time == Clock::UTC.iso8601(processed_time))
       end
     end
   end
