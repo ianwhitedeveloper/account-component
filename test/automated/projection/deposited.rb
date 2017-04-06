@@ -6,7 +6,7 @@ context "Projection" do
     account.balance = 1
 
     deposited = Messages::Events::Deposited.new
-    deposited.account_id = '123'
+    deposited.account_id = Identifier::UUID::Random.get
     deposited.amount = 11
 
     Projection.(account, deposited)
