@@ -10,5 +10,9 @@ module AccountComponent
 
       account.deposit(amount)
     end
+
+    apply Withdrawn do |withdrawn|
+      # TODO Apply Withdrawn event to account
+    end
   end
 end
