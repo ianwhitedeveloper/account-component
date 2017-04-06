@@ -12,7 +12,9 @@ module AccountComponent
     end
 
     apply Withdrawn do |withdrawn|
-      # TODO Apply Withdrawn event to account
+      amount = withdrawn.amount
+
+      account.withdraw(amount)
     end
   end
 end
