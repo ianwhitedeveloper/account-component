@@ -12,5 +12,9 @@ module AccountComponent
     def withdraw(amount)
       self.balance -= amount
     end
+
+    def sufficient_funds?(amount)
+      balance >= amount
+    end
   end
 end

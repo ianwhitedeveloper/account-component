@@ -8,10 +8,12 @@ module AccountComponent
 
       dependency :write, Messaging::Postgres::Write
       dependency :clock, Clock::UTC
+      dependency :store, Store
 
       def configure
-        Messaging::Postgres::Write.configure self
-        Clock::UTC.configure self
+        Messaging::Postgres::Write.configure(self)
+        Clock::UTC.configure(self)
+        Store.configure(self)
       end
 
       category :account
@@ -30,6 +32,8 @@ module AccountComponent
       end
 
       handle Withdraw do |withdraw|
+        account = store.fetch(account_id)
+
         account_id = withdraw.account_id
 
         time = clock.iso8601
