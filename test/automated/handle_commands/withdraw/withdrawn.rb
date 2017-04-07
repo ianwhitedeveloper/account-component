@@ -1,18 +1,26 @@
-require_relative '../automated_init'
+require_relative '../../automated_init'
 
 context "Handle Commands" do
-  context "Withdraw" do
+  context "Withdrawn" do
     handler = Handlers::Commands.new
+
+    account_id = Identifier::UUID::Random.get
+
+    amount = 1
 
     processed_time = Time.now
 
     handler.clock.now = processed_time
 
-    account_id = Identifier::UUID::Random.get
+    account = Account.new
+    account.id = account_id
+    account.balance = 11
+
+    handler.store.add(account_id, account)
 
     withdraw = Messages::Commands::Withdraw.new
     withdraw.account_id = account_id
-    withdraw.amount = 11
+    withdraw.amount = amount
     withdraw.time = '2000-01-01T11:11:11.00000Z'
 
     handler.(withdraw)
@@ -41,7 +49,7 @@ context "Handle Commands" do
       end
 
       test "amount" do
-        assert(withdrawn.amount == 11)
+        assert(withdrawn.amount == amount)
       end
 
       test "time" do
