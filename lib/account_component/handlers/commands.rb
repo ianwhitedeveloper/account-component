@@ -38,10 +38,19 @@ module AccountComponent
 
         time = clock.iso8601
 
+        stream_name = stream_name(account_id)
+
+        unless account.sufficient_funds?(withdraw.amount)
+          withdrawal_rejected = WithdrawalRejected.follow(withdraw)
+          withdrawal_rejected.time = time
+
+          write.(withdrawal_rejected, stream_name)
+
+          return
+        end
+
         withdrawn = Withdrawn.follow(withdraw)
         withdrawn.processed_time = time
-
-        stream_name = stream_name(account_id)
 
         write.(withdrawn, stream_name)
       end
