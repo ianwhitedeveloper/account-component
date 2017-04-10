@@ -6,7 +6,9 @@ require 'account_component/controls/time'
 require 'account_component/controls/money'
 
 require 'account_component/controls/account'
+require 'account_component/controls/customer'
 
+require 'account_component/controls/commands/open'
 require 'account_component/controls/commands/deposit'
 require 'account_component/controls/commands/withdraw'
 

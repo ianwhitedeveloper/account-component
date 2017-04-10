@@ -18,6 +18,19 @@ module AccountComponent
 
       category :account
 
+      handle Open do |open|
+        account_id = open.account_id
+
+        time = clock.iso8601
+
+        opened = Opened.follow(open)
+        opened.processed_time = time
+
+        stream_name = stream_name(account_id)
+
+        write.(opened, stream_name)
+      end
+
       handle Deposit do |deposit|
         account_id = deposit.account_id
 
