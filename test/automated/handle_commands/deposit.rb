@@ -2,54 +2,57 @@ require_relative '../automated_init'
 
 context "Handle Commands" do
   context "Deposit" do
-    handler = Handlers::Commands.new
+    context "Deposited" do
+      handler = Handlers::Commands.new
 
-    processed_time = Time.now
+      processed_time = Controls::Time::Processed::Raw.example
 
-    handler.clock.now = processed_time
+      handler.clock.now = processed_time
 
-    account_id = Identifier::UUID::Random.get
+      deposit = Controls::Commands::Deposit.example
 
-    deposit = Messages::Commands::Deposit.new
-    deposit.account_id = account_id
-    deposit.amount = 11
-    deposit.time = '2000-01-01T11:11:11.00000Z'
+      account_id = deposit.account_id and refute(account_id.nil?)
+      amount = deposit.amount and refute(amount.nil?)
+      effective_time = deposit.time and refute(effective_time.nil?)
 
-    handler.(deposit)
+      handler.(deposit)
 
-    writer = handler.write
+      writer = handler.write
 
-    deposited = writer.one_message do |event|
-      event.instance_of? Messages::Events::Deposited
-    end
-
-    test "Deposited Event is Written" do
-      refute(deposited.nil?)
-    end
-
-    test "Written to the account stream" do
-      written_to_stream = writer.written?(deposited) do |stream_name|
-        stream_name == "account-#{account_id}"
+      deposited = writer.one_message do |event|
+        event.instance_of? Messages::Events::Deposited
       end
 
-      assert(written_to_stream)
-    end
-
-    context "Attributes" do
-      test "account_id" do
-        assert(deposited.account_id == account_id)
+      test "Deposited Event is Written" do
+        refute(deposited.nil?)
       end
 
-      test "amount" do
-        assert(deposited.amount == 11)
+      test "Written to the account stream" do
+        written_to_stream = writer.written?(deposited) do |stream_name|
+          stream_name == "account-#{account_id}"
+        end
+
+        assert(written_to_stream)
       end
 
-      test "time" do
-        assert(deposited.time == '2000-01-01T11:11:11.00000Z')
-      end
+      context "Attributes" do
+        test "account_id" do
+          assert(deposited.account_id == account_id)
+        end
 
-      test "processed_time" do
-        assert(deposited.processed_time == Clock::UTC.iso8601(processed_time))
+        test "amount" do
+          assert(deposited.amount == amount)
+        end
+
+        test "time" do
+          assert(deposited.time == effective_time)
+        end
+
+        test "processed_time" do
+          processed_time_iso8601 = Clock::UTC.iso8601(processed_time)
+
+          assert(deposited.processed_time == processed_time_iso8601)
+        end
       end
     end
   end
