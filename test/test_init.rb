@@ -9,5 +9,7 @@ require 'test_bench'; TestBench.activate
 
 require 'pp'
 
+require 'account_component/controls'
+
 module AccountComponent; end
 include AccountComponent
