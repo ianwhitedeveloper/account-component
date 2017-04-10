@@ -5,6 +5,12 @@ module AccountComponent
 
     entity_name :account
 
+    apply Opened do |opened|
+      opened_time = Time.parse(opened.time)
+
+      account.opened_time = opened_time
+    end
+
     apply Deposited do |deposited|
       amount = deposited.amount
 
