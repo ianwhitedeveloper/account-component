@@ -41,6 +41,7 @@ module AccountComponent
       handle Close do |close|
         account_id = close.account_id
 
+        # TODO Include version
         account = store.fetch(account_id)
 
         if account.closed?
@@ -55,6 +56,7 @@ module AccountComponent
 
         stream_name = stream_name(account_id)
 
+        # TODO Specify expected version
         write.(closed, stream_name)
       end
 
