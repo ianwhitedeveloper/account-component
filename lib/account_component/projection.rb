@@ -22,5 +22,9 @@ module AccountComponent
 
       account.withdraw(amount)
     end
+
+    apply Closed do |closed|
+      # TODO Implement
+    end
   end
 end

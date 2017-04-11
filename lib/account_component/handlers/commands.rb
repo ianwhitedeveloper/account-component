@@ -38,6 +38,10 @@ module AccountComponent
         write.(opened, stream_name)
       end
 
+      handle Closed do |close|
+        # TODO Implement
+      end
+
       handle Deposit do |deposit|
         account_id = deposit.account_id
 
