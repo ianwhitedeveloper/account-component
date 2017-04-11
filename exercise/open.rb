@@ -15,3 +15,11 @@ Messaging::Postgres::Write.(open, command_stream_name)
 EventSource::Postgres::Read.(command_stream_name) do |event_data|
   Handlers::Commands.(event_data)
 end
+
+# Write open command again
+Messaging::Postgres::Write.(open, command_stream_name)
+
+# Observe that the opened event is not written twice
+EventSource::Postgres::Read.(command_stream_name) do |event_data|
+  Handlers::Commands.(event_data)
+end
