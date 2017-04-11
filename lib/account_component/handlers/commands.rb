@@ -61,6 +61,8 @@ module AccountComponent
       handle Deposit do |deposit|
         account_id = deposit.account_id
 
+        _, version = store.fetch(account_id, include: :version)
+
         time = clock.iso8601
 
         deposited = Deposited.follow(deposit)
@@ -68,13 +70,13 @@ module AccountComponent
 
         stream_name = stream_name(account_id)
 
-        write.(deposited, stream_name)
+        write.(deposited, stream_name, expected_version: version)
       end
 
       handle Withdraw do |withdraw|
         account_id = withdraw.account_id
 
-        account = store.fetch(account_id)
+        account, version = store.fetch(account_id, include: :version)
 
         time = clock.iso8601
 
@@ -92,7 +94,7 @@ module AccountComponent
         withdrawn = Withdrawn.follow(withdraw)
         withdrawn.processed_time = time
 
-        write.(withdrawn, stream_name)
+        write.(withdrawn, stream_name, expected_version: version)
       end
     end
   end
