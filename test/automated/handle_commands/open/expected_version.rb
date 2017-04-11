@@ -26,7 +26,7 @@ context "Handle Commands" do
           expected_version == version
         end
 
-        assert written_to_stream
+        assert(written_to_stream)
       end
     end
   end
