@@ -38,8 +38,24 @@ module AccountComponent
         write.(opened, stream_name)
       end
 
-      handle Closed do |close|
-        # TODO Implement
+      handle Close do |close|
+        account_id = close.account_id
+
+        account = store.fetch(account_id)
+
+        if account.closed?
+          logger.debug { "Command ignored (Command: #{close.message_type}, Account ID: #{account_id})" }
+          return
+        end
+
+        time = clock.iso8601
+
+        closed = Closed.follow(close)
+        closed.processed_time = time
+
+        stream_name = stream_name(account_id)
+
+        write.(closed, stream_name)
       end
 
       handle Deposit do |deposit|
