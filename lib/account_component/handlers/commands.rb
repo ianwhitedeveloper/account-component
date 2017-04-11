@@ -41,8 +41,7 @@ module AccountComponent
       handle Close do |close|
         account_id = close.account_id
 
-        # TODO Include version
-        account = store.fetch(account_id)
+        account, version = store.fetch(account_id, include: :version)
 
         if account.closed?
           logger.debug { "Command ignored (Command: #{close.message_type}, Account ID: #{account_id})" }
@@ -56,8 +55,7 @@ module AccountComponent
 
         stream_name = stream_name(account_id)
 
-        # TODO Specify expected version
-        write.(closed, stream_name)
+        write.(closed, stream_name, expected_version: version)
       end
 
       handle Deposit do |deposit|
