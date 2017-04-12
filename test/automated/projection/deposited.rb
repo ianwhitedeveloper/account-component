@@ -7,10 +7,16 @@ context "Projection" do
 
     deposited = Controls::Events::Deposited.example
 
+    position = deposited.transaction_position and refute(position.nil?)
+
     Projection.(account, deposited)
 
     test "Account balance is increased" do
       assert(account.balance == prior_balance + deposited.amount)
+    end
+
+    test "Transaction position is set" do
+      assert(account.transaction_position == position)
     end
   end
 end

@@ -61,12 +61,20 @@ module AccountComponent
       handle Deposit do |deposit|
         account_id = deposit.account_id
 
-        _, version = store.fetch(account_id, include: :version)
+        account, version = store.fetch(account_id, include: :version)
+
+        position = deposit.metadata.global_position
+
+        if account.current?(position)
+          logger.debug { "Command ignored (Command: #{deposit.message_type}, Account ID: #{account_id}, Account Position: #{account.position}, Deposit Position: #{position})" }
+          return
+        end
 
         time = clock.iso8601
 
         deposited = Deposited.follow(deposit)
         deposited.processed_time = time
+        deposited.transaction_position = position
 
         stream_name = stream_name(account_id)
 
