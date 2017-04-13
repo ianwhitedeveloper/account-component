@@ -86,7 +86,12 @@ module AccountComponent
 
         account, version = store.fetch(account_id, include: :version)
 
-        # TODO Check global position of withdraw command and ignore if account has already processed withdrawal
+        position = withdraw.metadata.global_position
+
+        if account.current?(position)
+          logger.debug { "Command ignored (Command: #{withdraw.message_type}, Account ID: #{account_id}, Account Position: #{withdraw.position}, Deposit Position: #{position})" }
+          return
+        end
 
         time = clock.iso8601
 
@@ -95,6 +100,7 @@ module AccountComponent
         unless account.sufficient_funds?(withdraw.amount)
           withdrawal_rejected = WithdrawalRejected.follow(withdraw)
           withdrawal_rejected.time = time
+          withdrawal_rejected.transaction_position = position
 
           write.(withdrawal_rejected, stream_name)
 
@@ -103,6 +109,7 @@ module AccountComponent
 
         withdrawn = Withdrawn.follow(withdraw)
         withdrawn.processed_time = time
+        withdrawn.transaction_position = position
 
         write.(withdrawn, stream_name, expected_version: version)
       end

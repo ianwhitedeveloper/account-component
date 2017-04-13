@@ -18,6 +18,7 @@ context "Handle Commands" do
       account_id = withdraw.account_id and refute(account_id.nil?)
       amount = withdraw.amount and refute(amount.nil?)
       effective_time = withdraw.time and refute(effective_time.nil?)
+      position = withdraw.metadata.global_position or fail
 
       handler.(withdraw)
 
@@ -56,6 +57,10 @@ context "Handle Commands" do
           processed_time_iso8601 = Clock::UTC.iso8601(processed_time)
 
           assert(withdrawn.processed_time == processed_time_iso8601)
+        end
+
+        test "transaction_position" do
+          assert(withdrawn.transaction_position == position)
         end
       end
     end
