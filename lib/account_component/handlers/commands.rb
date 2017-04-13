@@ -57,6 +57,14 @@ module AccountComponent
 
         write.(closed, stream_name, expected_version: version)
       end
+
+      handle Deposit do |deposit|
+        transaction_stream_name = stream_name(deposit.deposit_id, 'accountTransaction')
+
+        Try.(EventSource::ExpectedVersion::Error) do
+          write.initial(deposit, transaction_stream_name)
+        end
+      end
     end
   end
 end

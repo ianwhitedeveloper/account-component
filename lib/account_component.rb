@@ -1,4 +1,5 @@
 require 'eventide/postgres'
+require 'try'
 
 require 'account_component/messages/commands/open'
 require 'account_component/messages/commands/deposit'

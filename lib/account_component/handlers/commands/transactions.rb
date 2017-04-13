@@ -33,7 +33,7 @@ module AccountComponent
 
           time = clock.iso8601
 
-          deposited = Deposited.follow(deposit)
+          deposited = Deposited.follow(deposit, exclude: :deposit_id)
           deposited.processed_time = time
           deposited.sequence = position
 
