@@ -5,6 +5,7 @@ module AccountComponent
         include Messaging::Message
 
         attribute :account_id, String
+        attribute :withdrawal_id, String
         attribute :amount, Numeric
         attribute :time, String
       end
