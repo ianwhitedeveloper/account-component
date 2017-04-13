@@ -65,6 +65,10 @@ module AccountComponent
           write.initial(deposit, transaction_stream_name)
         end
       end
+
+      handle Withdraw do |withdraw|
+        # TODO Write withdrawal reservation
+      end
     end
   end
 end
