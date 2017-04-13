@@ -74,7 +74,7 @@ module AccountComponent
 
         deposited = Deposited.follow(deposit)
         deposited.processed_time = time
-        deposited.transaction_position = position
+        deposited.sequence = position
 
         stream_name = stream_name(account_id)
 
@@ -100,7 +100,7 @@ module AccountComponent
         unless account.sufficient_funds?(withdraw.amount)
           withdrawal_rejected = WithdrawalRejected.follow(withdraw)
           withdrawal_rejected.time = time
-          withdrawal_rejected.transaction_position = position
+          withdrawal_rejected.sequence = position
 
           write.(withdrawal_rejected, stream_name)
 
@@ -109,7 +109,7 @@ module AccountComponent
 
         withdrawn = Withdrawn.follow(withdraw)
         withdrawn.processed_time = time
-        withdrawn.transaction_position = position
+        withdrawn.sequence = position
 
         write.(withdrawn, stream_name, expected_version: version)
       end

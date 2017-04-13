@@ -6,7 +6,7 @@ module AccountComponent
     attribute :balance, Numeric, default: 0
     attribute :opened_time, Time
     attribute :closed_time, Time
-    attribute :transaction_position, Integer
+    attribute :sequence, Integer
 
     def open?
       !opened_time.nil?
@@ -25,9 +25,9 @@ module AccountComponent
     end
 
     def current?(position)
-      return false if transaction_position.nil?
+      return false if sequence.nil?
 
-      transaction_position >= position
+      sequence >= position
     end
 
     def sufficient_funds?(amount)

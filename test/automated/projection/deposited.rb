@@ -7,7 +7,7 @@ context "Projection" do
 
     deposited = Controls::Events::Deposited.example
 
-    position = deposited.transaction_position and refute(position.nil?)
+    position = deposited.sequence and refute(position.nil?)
 
     Projection.(account, deposited)
 
@@ -16,7 +16,7 @@ context "Projection" do
     end
 
     test "Transaction position is set" do
-      assert(account.transaction_position == position)
+      assert(account.sequence == position)
     end
   end
 end

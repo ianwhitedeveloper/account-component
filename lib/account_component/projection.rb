@@ -16,7 +16,7 @@ module AccountComponent
 
       account.deposit(amount)
 
-      account.transaction_position = deposited.transaction_position
+      account.sequence = deposited.sequence
     end
 
     apply Withdrawn do |withdrawn|
@@ -24,11 +24,11 @@ module AccountComponent
 
       account.withdraw(amount)
 
-      account.transaction_position = withdrawn.transaction_position
+      account.sequence = withdrawn.sequence
     end
 
     apply WithdrawalRejected do |withdrawal_rejected|
-      account.transaction_position = withdrawal_rejected.transaction_position
+      account.sequence = withdrawal_rejected.sequence
     end
 
     apply Closed do |closed|

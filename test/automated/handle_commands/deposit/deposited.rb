@@ -55,8 +55,8 @@ context "Handle Commands" do
           assert(deposited.processed_time == processed_time_iso8601)
         end
 
-        test "transaction_position" do
-          assert(deposited.transaction_position == position)
+        test "sequence" do
+          assert(deposited.sequence == position)
         end
       end
     end

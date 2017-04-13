@@ -10,7 +10,7 @@ module AccountComponent
           deposited.time = Controls::Time::Effective.example
           deposited.processed_time = Controls::Time::Processed.example
 
-          deposited.transaction_position = Position.example
+          deposited.sequence = Position.example
 
           deposited
         end

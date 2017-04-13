@@ -1,7 +1,7 @@
 module AccountComponent
   module Controls
     module Account
-      def self.example(balance: nil, transaction_position: nil)
+      def self.example(balance: nil, sequence: nil)
         balance ||= self.balance
 
         account = AccountComponent::Account.build
@@ -10,7 +10,7 @@ module AccountComponent
         account.balance = balance
         account.opened_time = Time::Effective::Raw.example
 
-        account.transaction_position = transaction_position unless transaction_position.nil?
+        account.sequence = sequence unless sequence.nil?
 
         account
       end
@@ -53,7 +53,7 @@ module AccountComponent
         def self.example
           position = Controls::Position.example
 
-          Account.example(transaction_position: position)
+          Account.example(sequence: position)
         end
       end
 

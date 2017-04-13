@@ -5,8 +5,8 @@ context "Account" do
     position = Controls::Position.example
 
     context "Not current" do
-      context "Account's position is lower than transaction's position" do
-        account = Controls::Account.example(transaction_position: position - 1)
+      context "Account's sequence is lower than transaction's position" do
+        account = Controls::Account.example(sequence: position - 1)
 
         current = account.current?(position)
 
@@ -15,8 +15,8 @@ context "Account" do
         end
       end
 
-      context "Account's position is nil" do
-        account = Controls::Account.example(transaction_position: nil)
+      context "Account's sequence is nil" do
+        account = Controls::Account.example(sequence: nil)
 
         current = account.current?(position)
 
@@ -27,8 +27,8 @@ context "Account" do
     end
 
     context "Is current" do
-      context "Account's position is greater than transaction's position" do
-        account = Controls::Account.example(transaction_position: position + 1)
+      context "Account's sequence is greater than transaction's position" do
+        account = Controls::Account.example(sequence: position + 1)
 
         current = account.current?(position)
 
@@ -37,8 +37,8 @@ context "Account" do
         end
       end
 
-      context "Account's position is equal to than transaction's position" do
-        account = Controls::Account.example(transaction_position: position)
+      context "Account's sequence is equal to than transaction's position" do
+        account = Controls::Account.example(sequence: position)
 
         current = account.current?(position)
 

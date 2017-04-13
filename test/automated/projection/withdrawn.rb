@@ -7,7 +7,7 @@ context "Projection" do
 
     withdrawn = Controls::Events::Withdrawn.example
 
-    position = withdrawn.transaction_position or fail
+    position = withdrawn.sequence or fail
 
     Projection.(account, withdrawn)
 
@@ -16,7 +16,7 @@ context "Projection" do
     end
 
     test "Transaction position is set" do
-      assert(account.transaction_position == position)
+      assert(account.sequence == position)
     end
   end
 end

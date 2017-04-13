@@ -9,7 +9,7 @@ module AccountComponent
           withdrawal_rejected.amount = Money.example
           withdrawal_rejected.time = Controls::Time::Effective.example
 
-          withdrawal_rejected.transaction_position = Position.example
+          withdrawal_rejected.sequence = Position.example
 
           withdrawal_rejected
         end

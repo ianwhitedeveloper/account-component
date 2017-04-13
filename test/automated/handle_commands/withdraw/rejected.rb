@@ -55,8 +55,8 @@ context "Handle Commands" do
           assert(withdrawal_rejected.time == processed_time_iso8601)
         end
 
-        test "transaction_position" do
-          assert(withdrawal_rejected.transaction_position == position)
+        test "sequence" do
+          assert(withdrawal_rejected.sequence == position)
         end
       end
     end
