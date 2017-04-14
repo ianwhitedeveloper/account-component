@@ -7,7 +7,7 @@ deposit = Messages::Commands::Deposit.new
 deposit.account_id = account_id
 deposit.id = deposit_id
 deposit.amount = 11
-deposit.time = '2000-01-01T11:11:11.00000Z'
+deposit.time = '2000-01-01T11:11:11.000Z'
 
 command_stream_name = "account:command-#{account_id}"
 

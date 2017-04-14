@@ -12,7 +12,7 @@ store = Store.build
 deposited = Messages::Events::Deposited.new
 deposited.account_id = account_id
 deposited.amount = 11
-deposited.time = '2000-01-01T11:11:11.00000Z'
+deposited.time = '2000-01-01T11:11:11.000Z'
 
 Messaging::Postgres::Write.(deposited, event_stream_name)
 
@@ -24,7 +24,7 @@ pp "Account #{account_id} balance: $#{account.balance}"
 withdraw = Messages::Commands::Withdraw.new
 withdraw.account_id = account_id
 withdraw.amount = 12
-withdraw.time = '2000-01-01T11:11:11.00000Z'
+withdraw.time = '2000-01-01T11:11:11.000Z'
 
 Messaging::Postgres::Write.(withdraw, command_stream_name)
 

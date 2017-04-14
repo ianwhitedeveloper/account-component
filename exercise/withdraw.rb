@@ -5,7 +5,7 @@ account_id = Identifier::UUID::Random.get
 withdraw = Messages::Commands::Withdraw.new
 withdraw.account_id = account_id
 withdraw.amount = 11
-withdraw.time = '2000-01-01T11:11:11.00000Z'
+withdraw.time = '2000-01-01T11:11:11.000Z'
 
 command_stream_name = "account:command-#{account_id}"
 
