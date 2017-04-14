@@ -12,10 +12,10 @@ context "Handle Commands" do
 
         deposit = Controls::Commands::Deposit.example
 
-        account_id = deposit.account_id and refute(account_id.nil?)
-        amount = deposit.amount and refute(amount.nil?)
-        effective_time = deposit.time and refute(effective_time.nil?)
-        position = deposit.metadata.global_position and refute(position.nil?)
+        account_id = deposit.account_id or fail
+        amount = deposit.amount or fail
+        effective_time = deposit.time or fail
+        position = deposit.metadata.global_position or fail
 
         handler.(deposit)
 

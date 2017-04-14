@@ -7,7 +7,7 @@ context "Projection" do
 
     deposited = Controls::Events::Deposited.example
 
-    position = deposited.sequence and refute(position.nil?)
+    position = deposited.sequence or fail
 
     Projection.(account, deposited)
 

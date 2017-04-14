@@ -11,9 +11,9 @@ context "Handle Commands" do
 
       open = Controls::Commands::Open.example
 
-      account_id = open.account_id and refute(account_id.nil?)
-      customer_id = open.customer_id and refute(customer_id.nil?)
-      effective_time = open.time and refute(effective_time.nil?)
+      account_id = open.account_id or fail
+      customer_id = open.customer_id or fail
+      effective_time = open.time or fail
 
       handler.(open)
 

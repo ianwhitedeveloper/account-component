@@ -16,9 +16,9 @@ context "Handle Commands" do
 
         withdraw = Controls::Commands::Withdraw.example
 
-        account_id = withdraw.account_id and refute(account_id.nil?)
-        amount = withdraw.amount and refute(amount.nil?)
-        effective_time = withdraw.time and refute(effective_time.nil?)
+        account_id = withdraw.account_id or fail
+        amount = withdraw.amount or fail
+        effective_time = withdraw.time or fail
         position = withdraw.metadata.global_position or fail
 
         handler.(withdraw)

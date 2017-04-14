@@ -11,8 +11,8 @@ context "Handle Commands" do
 
       close = Controls::Commands::Close.example
 
-      account_id = close.account_id and refute(account_id.nil?)
-      effective_time = close.time and refute(effective_time.nil?)
+      account_id = close.account_id or fail
+      effective_time = close.time or fail
 
       handler.(close)
 
