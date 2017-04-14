@@ -68,7 +68,7 @@ module AccountComponent
             return
           end
 
-          withdrawn = Withdrawn.follow(withdraw)
+          withdrawn = Withdrawn.follow(withdraw, exclude: :withdrawal_id)
           withdrawn.processed_time = time
           withdrawn.sequence = position
 

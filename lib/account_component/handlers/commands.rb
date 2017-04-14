@@ -67,7 +67,11 @@ module AccountComponent
       end
 
       handle Withdraw do |withdraw|
-        # TODO Write withdrawal reservation
+        transaction_stream_name = stream_name(withdraw.withdrawal_id, 'accountTransaction')
+
+        Try.(EventSource::ExpectedVersion::Error) do
+          write.initial(withdraw, transaction_stream_name)
+        end
       end
     end
   end
