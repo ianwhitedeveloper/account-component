@@ -1,4 +1,4 @@
-require_relative 'exercise_init'
+require_relative './exercise_init'
 
 account_id = Identifier::UUID::Random.get
 
