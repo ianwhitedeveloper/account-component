@@ -8,7 +8,13 @@ context "Projection" do
 
     closed = Controls::Events::Closed.example
 
+    account_id = closed.account_id or fail
+
     Projection.(account, closed)
+
+    test "ID is set" do
+      assert(account.id == account_id)
+    end
 
     test "Closed time is converted and copied" do
       closed_time = Time.parse(closed.time)

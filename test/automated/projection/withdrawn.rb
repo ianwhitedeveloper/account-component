@@ -2,21 +2,36 @@ require_relative '../automated_init'
 
 context "Projection" do
   context "Withdrawn" do
-    account = Controls::Account::Balance.example
-    prior_balance = account.balance
-
     withdrawn = Controls::Events::Withdrawn.example
 
-    position = withdrawn.sequence or fail
+    context do
+      account = Controls::Account::Balance.example
+      prior_balance = account.balance
 
-    Projection.(account, withdrawn)
+      position = withdrawn.sequence or fail
 
-    test "Account balance is decreased" do
-      assert(account.balance == prior_balance - withdrawn.amount)
+      Projection.(account, withdrawn)
+
+      test "Account balance is decreased" do
+        assert(account.balance == prior_balance - withdrawn.amount)
+      end
+
+      test "Transaction position is set" do
+        assert(account.sequence == position)
+      end
     end
 
-    test "Transaction position is set" do
-      assert(account.sequence == position)
+    context "ID Is Set" do
+      account = Controls::Account::New.example
+
+      assert(account.id.nil?)
+      account_id = withdrawn.account_id or fail
+
+      Projection.(account, withdrawn)
+
+      test do
+        assert(account.id == account_id)
+      end
     end
   end
 end
